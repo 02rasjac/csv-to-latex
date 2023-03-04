@@ -93,3 +93,7 @@ h1 {
   grid-area: 2 / 2 / 3 / 3;
   width: 100%;
 }
+
+#latex pre {
+  margin: 0;
+}
