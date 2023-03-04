@@ -4,9 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>CSV to Latex</title>
   </head>
   <body>
-    <h1>test</h1>
+    <h1>Convert CSV to Latex table</h1>
+    <div class="container">
+      <section id="preview">
+        <h2>Table-preview</h2>
+      </section>
+      <section id="csv">
+        <textarea name="csv-in" id="csv-in" cols="30" rows="10">Test</textarea>
+      </section>
+      <section id="latex">
+        <pre>
+          <code> 
+\begin{table} 
+  \begin{tabular} 
+  \end[tabular] 
+\end{table} 
+          </code>
+        </pre>
+      </section>
+    </div>
   </body>
 </html>
