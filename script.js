@@ -11,6 +11,8 @@ function ReadCSV() {
 }
 
 function PrintLatex(data) {
+  PrintBegin();
+
   for (let i = 0; i < data.length; i++) {
     let row = '        ';
     for (let j = 0; j < data[i].length; j++) {
@@ -22,12 +24,21 @@ function PrintLatex(data) {
     row += ' \\\\\n';
     output.textContent += row;
   }
+
+  PrintEnd();
+
+  function PrintBegin() {
+    output.textContent = '\\begin{table}[!ht]\n';
+    let colPos = '';
+    for (let i = 0; i < data[0].length; i++) {
+      colPos += 'c';
+    }
+    output.textContent += `    \\begin{tabular}{${colPos}}\n`;
+  }
+
+  function PrintEnd() {
+    output.textContent += '    \\end{tabular}\n' + '\\end{table}';
+  }
 }
 
-output.textContent = `\\begin{table}[!ht]
-    \\begin{tabular}
-`;
 PrintLatex(ReadCSV());
-output.textContent += `    \\end{tabular}
-\\end{table}
-`;
