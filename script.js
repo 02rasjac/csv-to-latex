@@ -1,13 +1,13 @@
 let output = document.querySelector('#latex code');
+let input = document.querySelector('#csv > textarea');
+input.addEventListener('input', Update);
 
-function ReadCSV() {
-  let input = document.querySelector('#csv > textarea');
-  //! Testing only
-  input.textContent = `a,b
-1,2
-3,4`;
+function Update() {
+  PrintLatex(ReadCSV(input.value));
+}
 
-  return input.textContent.split('\n').map((x) => x.split(','));
+function ReadCSV(data) {
+  return data.split('\n').map((x) => x.split(','));
 }
 
 function PrintLatex(data) {
@@ -44,5 +44,3 @@ function PrintLatex(data) {
     output.textContent += '\\end{table}';
   }
 }
-
-PrintLatex(ReadCSV());
