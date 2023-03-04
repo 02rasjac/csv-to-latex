@@ -29,6 +29,7 @@ function PrintLatex(data) {
 
   function PrintBegin() {
     output.textContent = '\\begin{table}[!ht]\n';
+    output.textContent += '    \\centering\n';
     let colPos = '';
     for (let i = 0; i < data[0].length; i++) {
       colPos += 'c';
