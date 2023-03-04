@@ -38,7 +38,10 @@ function PrintLatex(data) {
   }
 
   function PrintEnd() {
-    output.textContent += '    \\end{tabular}\n' + '\\end{table}';
+    output.textContent += '    \\end{tabular}\n';
+    output.textContent += '    \\caption{Caption}\n';
+    output.textContent += '    \\label{t:table}\n';
+    output.textContent += '\\end{table}';
   }
 }
 
