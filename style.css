@@ -3,6 +3,7 @@
   --secondary-color: rgba(197, 197, 197, 0.753);
   --main-bg: rgb(24, 24, 24);
   --secondary-bg: rgb(43, 43, 43);
+  --section-padding: 1em;
 }
 * {
   color: var(--main-color);
@@ -44,6 +45,8 @@ h1 {
 
 .container > section {
   background-color: var(--secondary-bg);
+  padding: var(--section-padding);
+  box-sizing: border-box;
 }
 
 #preview {
@@ -53,6 +56,7 @@ h1 {
 
 #csv {
   grid-area: 1 / 2 / 2 / 3;
+  padding: 0;
   width: 100%;
 }
 
