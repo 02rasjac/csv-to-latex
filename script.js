@@ -3,6 +3,8 @@ let input = document.querySelector('#csv > textarea');
 let table = document.querySelector('#preview tbody');
 input.addEventListener('input', Update);
 
+let colChecks = [];
+
 function Update() {
   const data = ReadCSV(input.value);
   PrintLatex(data);
@@ -64,13 +66,16 @@ function GenerateHTML(data) {
 
   function CreateColChecks() {
     let row = document.createElement('tr');
+    colChecks = [];
     for (let i = 0; i < data[0].length; i++) {
       let col = document.createElement('td');
       let check = document.createElement('input');
       check.setAttribute('type', 'checkbox');
+      colChecks.push(check);
       col.appendChild(check);
       row.appendChild(col);
     }
     table.appendChild(row);
+    console.log(colChecks);
   }
 }
