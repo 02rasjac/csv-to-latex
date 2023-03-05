@@ -51,16 +51,20 @@ function UpdateBorder(e) {
   const isChecked = e.target.checked;
   switch (name) {
     case 'cols':
-      const c = isChecked ? '|' : '';
-      for (let i = 1; i < colBorders.length - 1; i++) {
-        colBorders[i] = c;
-      }
+      Cols();
       break;
     default:
       break;
   }
 
   Update();
+
+  function Cols() {
+    const c = isChecked ? '|' : '';
+    for (let i = 1; i < colBorders.length - 1; i++) {
+      colBorders[i] = c;
+    }
+  }
 }
 
 function ReadCSV(data) {
