@@ -50,11 +50,25 @@ function PrintLatex(data) {
 
 function GenerateHTML(data) {
   table.textContent = '';
+  CreateColChecks();
+
   for (let i = 0; i < data.length; i++) {
     let row = document.createElement('tr');
     for (let j = 0; j < data[i].length; j++) {
       let col = document.createElement('td');
       col.textContent = data[i][j];
+      row.appendChild(col);
+    }
+    table.appendChild(row);
+  }
+
+  function CreateColChecks() {
+    let row = document.createElement('tr');
+    for (let i = 0; i < data[0].length; i++) {
+      let col = document.createElement('td');
+      let check = document.createElement('input');
+      check.setAttribute('type', 'checkbox');
+      col.appendChild(check);
       row.appendChild(col);
     }
     table.appendChild(row);
