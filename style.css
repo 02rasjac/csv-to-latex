@@ -59,6 +59,14 @@ h1 {
   width: 100%;
 }
 
+#preview table {
+  margin: 0 auto;
+}
+
+#preview table td {
+  margin: 5em 2em;
+}
+
 /* 
 =================
 ------ CSV ------
