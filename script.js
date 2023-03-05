@@ -10,6 +10,7 @@ options.forEach((node) => {
 
 let colChecks = [];
 let alignment = ''; // i.e r|ccc
+let colBorders = [];
 
 //! TESTING ONLY
 for (let row = 0; row < 10; row++) {
@@ -17,6 +18,10 @@ for (let row = 0; row < 10; row++) {
     input.value += row + col + ',';
   }
   input.value += row + 7 + '\n';
+}
+
+for (let col = 0; col < 9; col++) {
+  colBorders.push('');
 }
 Update();
 //! END OF TESTING ONLY
@@ -31,6 +36,9 @@ function Update() {
 function UpdateAlignment(data) {
   for (let i = 0; i < data[0].length; i++) {
     alignment += 'c';
+    if (i < data[0].length - 1) {
+      alignment += colBorders[i + 1];
+    }
   }
 }
 
