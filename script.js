@@ -2,12 +2,14 @@ let output = document.querySelector('#latex code');
 let input = document.querySelector('#csv > textarea');
 let table = document.querySelector('#preview tbody');
 let options = document.querySelectorAll('#options input');
+
 input.addEventListener('input', Update);
 options.forEach((node) => {
   node.addEventListener('change', UpdateBorder);
 });
 
 let colChecks = [];
+let alignment = ''; // i.e r|ccc
 
 //! TESTING ONLY
 for (let row = 0; row < 10; row++) {
@@ -21,8 +23,15 @@ Update();
 
 function Update() {
   const data = ReadCSV(input.value);
+  UpdateAlignment(data);
   PrintLatex(data);
   GenerateHTML(data);
+}
+
+function UpdateAlignment(data) {
+  for (let i = 0; i < data[0].length; i++) {
+    alignment += 'c';
+  }
 }
 
 function UpdateBorder(e) {
@@ -53,11 +62,7 @@ function PrintLatex(data) {
   function PrintBegin() {
     output.textContent = '\\begin{table}[!ht]\n';
     output.textContent += '    \\centering\n';
-    let colPos = '';
-    for (let i = 0; i < data[0].length; i++) {
-      colPos += 'c';
-    }
-    output.textContent += `    \\begin{tabular}{${colPos}}\n`;
+    output.textContent += `    \\begin{tabular}{${alignment}}\n`;
   }
 
   function PrintEnd() {
