@@ -124,6 +124,5 @@ function GenerateHTML(data) {
       row.appendChild(col);
     }
     table.appendChild(row);
-    console.log(colChecks);
   }
 }
