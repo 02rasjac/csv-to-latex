@@ -17,7 +17,10 @@ for (let row = 0; row < 10; row++) {
   for (let col = 0; col < 7; col++) {
     input.value += row + col + ',';
   }
-  input.value += row + 7 + '\n';
+  input.value += row + 7;
+  if (row < 9) {
+    input.value += '\n';
+  }
 }
 
 for (let col = 0; col < 9; col++) {
