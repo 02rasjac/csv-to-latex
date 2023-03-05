@@ -48,10 +48,12 @@ function UpdateAlignment(data) {
 
 function UpdateBorder(e) {
   const name = e.target.getAttribute('name');
+  const isChecked = e.target.checked;
   switch (name) {
     case 'cols':
+      const c = isChecked ? '|' : '';
       for (let i = 1; i < colBorders.length - 1; i++) {
-        colBorders[i] = '|';
+        colBorders[i] = c;
       }
       break;
     default:
