@@ -37,6 +37,7 @@ function Update() {
 }
 
 function UpdateAlignment(data) {
+  alignment = '';
   for (let i = 0; i < data[0].length; i++) {
     alignment += 'c';
     if (i < data[0].length - 1) {
@@ -46,7 +47,18 @@ function UpdateAlignment(data) {
 }
 
 function UpdateBorder(e) {
-  console.log(e.target.getAttribute('name'));
+  const name = e.target.getAttribute('name');
+  switch (name) {
+    case 'cols':
+      for (let i = 1; i < colBorders.length - 1; i++) {
+        colBorders[i] = '|';
+      }
+      break;
+    default:
+      break;
+  }
+
+  Update();
 }
 
 function ReadCSV(data) {
