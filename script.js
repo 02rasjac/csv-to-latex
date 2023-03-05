@@ -1,9 +1,12 @@
 let output = document.querySelector('#latex code');
 let input = document.querySelector('#csv > textarea');
+let table = document.querySelector('#preview tbody');
 input.addEventListener('input', Update);
 
 function Update() {
-  PrintLatex(ReadCSV(input.value));
+  const data = ReadCSV(input.value);
+  PrintLatex(data);
+  GenerateHTML(data);
 }
 
 function ReadCSV(data) {
@@ -42,5 +45,18 @@ function PrintLatex(data) {
     output.textContent += '    \\caption{Caption}\n';
     output.textContent += '    \\label{t:table}\n';
     output.textContent += '\\end{table}';
+  }
+}
+
+function GenerateHTML(data) {
+  table.textContent = '';
+  for (let i = 0; i < data.length; i++) {
+    let row = document.createElement('tr');
+    for (let j = 0; j < data[i].length; j++) {
+      let col = document.createElement('td');
+      col.textContent = data[i][j];
+      row.appendChild(col);
+    }
+    table.appendChild(row);
   }
 }
