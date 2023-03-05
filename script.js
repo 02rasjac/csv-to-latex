@@ -5,6 +5,16 @@ input.addEventListener('input', Update);
 
 let colChecks = [];
 
+//! TESTING ONLY
+for (let row = 0; row < 10; row++) {
+  for (let col = 0; col < 7; col++) {
+    input.value += row + col + ',';
+  }
+  input.value += row + 7 + '\n';
+}
+Update();
+//! END OF TESTING ONLY
+
 function Update() {
   const data = ReadCSV(input.value);
   PrintLatex(data);
