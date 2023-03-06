@@ -127,19 +127,27 @@ function GenerateHTML(data) {
       check.setAttribute('type', 'checkbox');
       colChecks.push(check);
       col.appendChild(check);
+      if (i === 0) {
+        let check2 = check.cloneNode();
+        col.appendChild(check2);
+      }
+
       row.appendChild(col);
     }
     table.appendChild(row);
   }
 
   function OffsetCheckbox() {
-    table
-      .querySelector('tr')
-      .querySelectorAll('td')
-      .forEach((col) => {
-        let input = col.querySelector('input');
-        let offsetBy = col.offsetWidth * 0.5;
-        input.style.transform = `translate(${offsetBy}px)`;
-      });
+    let cols = table.querySelector('tr').querySelectorAll('td');
+    let firstInputs = cols[0].querySelectorAll('input');
+    let offsetBy = cols[0].offsetWidth * 0.2;
+    firstInputs[0].style.transform = `translate(${-offsetBy}px)`;
+    firstInputs[1].style.transform = `translate(${offsetBy}px)`;
+
+    for (let i = 1; i < cols.length; i++) {
+      let input = cols[i].querySelector('input');
+      let offsetBy = cols[i].offsetWidth * 0.5;
+      input.style.transform = `translate(${offsetBy}px)`;
+    }
   }
 }
