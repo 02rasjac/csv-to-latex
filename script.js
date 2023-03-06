@@ -42,13 +42,14 @@ function UpdateLatex() {
 }
 
 function UpdateAlignment() {
-  alignment = '';
+  alignment = colBorders[0];
   for (let i = 0; i < data[0].length; i++) {
     alignment += 'c';
     if (i < data[0].length - 1) {
       alignment += colBorders[i + 1];
     }
   }
+  alignment += colBorders[colBorders.length - 1];
 }
 
 function UpdateCheckboxes(e) {
@@ -66,14 +67,14 @@ function UpdateCheckboxes(e) {
   UpdateLatex();
 
   function Cols() {
-    for (let i = 1; i < colBorders.length - 1; i++) {
+    for (let i = 0; i < colBorders.length; i++) {
       colChecks[i].checked = isChecked;
     }
   }
 }
 
 function UpdateBorder() {
-  for (let i = 0; i < colChecks.length - 1; i++) {
+  for (let i = 0; i < colChecks.length; i++) {
     colBorders[i] = colChecks[i].checked ? '|' : '';
   }
 }
