@@ -5,7 +5,7 @@ let options = document.querySelectorAll('#options input');
 
 input.addEventListener('input', UpdateAll);
 options.forEach((node) => {
-  node.addEventListener('change', UpdateBorder);
+  node.addEventListener('change', UpdateCheckboxes);
 });
 
 let colChecks = [];
@@ -51,7 +51,7 @@ function UpdateAlignment() {
   }
 }
 
-function UpdateBorder(e) {
+function UpdateCheckboxes(e) {
   const name = e.target.getAttribute('name');
   const isChecked = e.target.checked;
   switch (name) {
@@ -62,14 +62,19 @@ function UpdateBorder(e) {
       break;
   }
 
+  UpdateBorder();
   UpdateLatex();
 
   function Cols() {
-    const c = isChecked ? '|' : '';
     for (let i = 1; i < colBorders.length - 1; i++) {
-      colBorders[i] = c;
       colChecks[i].checked = isChecked;
     }
+  }
+}
+
+function UpdateBorder() {
+  for (let i = 0; i < colChecks.length - 1; i++) {
+    colBorders[i] = colChecks[i].checked ? '|' : '';
   }
 }
 
@@ -132,6 +137,8 @@ function GenerateHTML() {
       let col = document.createElement('td');
       let check = document.createElement('input');
       check.setAttribute('type', 'checkbox');
+      check.setAttribute('data-col-index', i);
+      check.addEventListener('change', UpdateCheckboxes);
       colChecks.push(check);
       col.appendChild(check);
 
