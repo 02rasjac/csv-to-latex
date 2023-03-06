@@ -67,7 +67,7 @@ function UpdateCheckboxes(e) {
   UpdateLatex();
 
   function Cols() {
-    for (let i = 0; i < colBorders.length; i++) {
+    for (let i = 1; i < colBorders.length - 1; i++) {
       colChecks[i].checked = isChecked;
     }
   }
