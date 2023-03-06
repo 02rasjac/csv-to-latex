@@ -116,6 +116,8 @@ function GenerateHTML(data) {
     table.appendChild(row);
   }
 
+  OffsetCheckbox();
+
   function CreateColChecks() {
     let row = document.createElement('tr');
     colChecks = [];
@@ -128,5 +130,16 @@ function GenerateHTML(data) {
       row.appendChild(col);
     }
     table.appendChild(row);
+  }
+
+  function OffsetCheckbox() {
+    table
+      .querySelector('tr')
+      .querySelectorAll('td')
+      .forEach((col) => {
+        let input = col.querySelector('input');
+        let offsetBy = col.offsetWidth * 0.5;
+        input.style.transform = `translate(${offsetBy}px)`;
+      });
   }
 }
