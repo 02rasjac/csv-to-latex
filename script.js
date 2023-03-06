@@ -3,7 +3,7 @@ let input = document.querySelector('#csv > textarea');
 let table = document.querySelector('#preview tbody');
 let options = document.querySelectorAll('#options input');
 
-input.addEventListener('input', Update);
+input.addEventListener('input', UpdateAll);
 options.forEach((node) => {
   node.addEventListener('change', UpdateBorder);
 });
@@ -11,6 +11,7 @@ options.forEach((node) => {
 let colChecks = [];
 let alignment = ''; // i.e r|ccc
 let colBorders = [];
+let data = [];
 
 //! TESTING ONLY
 for (let row = 0; row < 10; row++) {
@@ -26,17 +27,21 @@ for (let row = 0; row < 10; row++) {
 for (let col = 0; col < 9; col++) {
   colBorders.push('');
 }
-Update();
+UpdateAll();
 //! END OF TESTING ONLY
 
-function Update() {
-  const data = ReadCSV(input.value);
-  UpdateAlignment(data);
-  PrintLatex(data);
-  GenerateHTML(data);
+function UpdateAll() {
+  UpdateData(input.value);
+  UpdateLatex();
+  GenerateHTML();
 }
 
-function UpdateAlignment(data) {
+function UpdateLatex() {
+  UpdateAlignment();
+  PrintLatex();
+}
+
+function UpdateAlignment() {
   alignment = '';
   for (let i = 0; i < data[0].length; i++) {
     alignment += 'c';
@@ -57,21 +62,22 @@ function UpdateBorder(e) {
       break;
   }
 
-  Update();
+  UpdateLatex();
 
   function Cols() {
     const c = isChecked ? '|' : '';
     for (let i = 1; i < colBorders.length - 1; i++) {
       colBorders[i] = c;
+      colChecks[i].checked = isChecked;
     }
   }
 }
 
-function ReadCSV(data) {
-  return data.split('\n').map((x) => x.split(','));
+function UpdateData(input) {
+  data = input.split('\n').map((x) => x.split(','));
 }
 
-function PrintLatex(data) {
+function PrintLatex() {
   PrintBegin();
 
   for (let i = 0; i < data.length; i++) {
@@ -102,7 +108,7 @@ function PrintLatex(data) {
   }
 }
 
-function GenerateHTML(data) {
+function GenerateHTML() {
   table.textContent = '';
   CreateColChecks();
 
