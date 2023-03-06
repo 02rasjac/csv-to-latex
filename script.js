@@ -108,6 +108,7 @@ function GenerateHTML(data) {
 
   for (let i = 0; i < data.length; i++) {
     let row = document.createElement('tr');
+    row.appendChild(document.createElement('td'));
     for (let j = 0; j < data[i].length; j++) {
       let col = document.createElement('td');
       col.textContent = data[i][j];
@@ -121,7 +122,7 @@ function GenerateHTML(data) {
   function CreateColChecks() {
     let row = document.createElement('tr');
     colChecks = [];
-    for (let i = 0; i < data[0].length; i++) {
+    for (let i = 0; i < data[0].length + 1; i++) {
       let col = document.createElement('td');
       let check = document.createElement('input');
       check.setAttribute('type', 'checkbox');
