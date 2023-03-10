@@ -139,7 +139,8 @@ function GenerateHTML() {
     table.appendChild(row);
   }
 
-  OffsetCheckbox();
+  OffsetColCheckbox();
+  OffsetRowCheckbox();
 
   function CreateColChecks() {
     let row = document.createElement('tr');
@@ -169,13 +170,22 @@ function GenerateHTML() {
     return col;
   }
 
-  function OffsetCheckbox() {
+  function OffsetColCheckbox() {
     let cols = table.querySelector('tr').querySelectorAll('td');
 
     for (let i = 0; i < cols.length; i++) {
       let input = cols[i].querySelector('input');
       let offsetBy = cols[i].offsetWidth * 0.5;
       input.style.transform = `translate(${offsetBy}px)`;
+    }
+  }
+
+  function OffsetRowCheckbox() {
+    let cols = table.querySelectorAll('tr td:first-child');
+    for (let i = 1; i < cols.length; i++) {
+      let input = cols[i].querySelector('input');
+      let offsetBy = cols[i].offsetHeight * 0.5;
+      input.style.transform = `translate(0, ${offsetBy}px)`;
     }
   }
 }
