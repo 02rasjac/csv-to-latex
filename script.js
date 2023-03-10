@@ -9,8 +9,10 @@ options.forEach((node) => {
 });
 
 let colChecks = [];
+let rowChecks = [];
 let alignment = ''; // i.e r|ccc
 let colBorders = [];
+let rowBorders = [];
 let data = [];
 
 //! TESTING ONLY
@@ -26,6 +28,9 @@ for (let row = 0; row < 10; row++) {
 
 for (let col = 0; col < 9; col++) {
   colBorders.push('');
+}
+for (let row = 0; row < 11; row++) {
+  rowBorders.push('');
 }
 UpdateAll();
 //! END OF TESTING ONLY
@@ -67,7 +72,8 @@ function UpdateCheckboxes(e) {
       break;
   }
 
-  UpdateBorder();
+  UpdateColBorder();
+  UpdateRowBorder();
   UpdateLatex();
 
   function Cols() {
@@ -77,7 +83,7 @@ function UpdateCheckboxes(e) {
   }
 }
 
-function UpdateBorder() {
+function UpdateColBorder() {
   for (let i = 0; i < colChecks.length; i++) {
     const isChecked = colChecks[i].checked;
     colBorders[i] = isChecked ? '|' : '';
@@ -89,6 +95,13 @@ function UpdateBorder() {
   }
 }
 
+function UpdateRowBorder() {
+  for (let i = 0; i < rowChecks.length; i++) {
+    const isChecked = rowChecks[i].checked;
+    rowBorders[i] = isChecked ? '\\hline \n' : '';
+  }
+}
+
 function UpdateData(input) {
   data = input.split('\n').map((x) => x.split(','));
 }
@@ -97,6 +110,7 @@ function PrintLatex() {
   PrintBegin();
 
   for (let i = 0; i < data.length; i++) {
+    PrintBorder(i);
     let row = '        ';
     for (let j = 0; j < data[i].length; j++) {
       row += data[i][j];
@@ -108,6 +122,7 @@ function PrintLatex() {
     output.textContent += row;
   }
 
+  PrintBorder(rowBorders.length - 1);
   PrintEnd();
 
   function PrintBegin() {
@@ -121,6 +136,13 @@ function PrintLatex() {
     output.textContent += '    \\caption{Caption}\n';
     output.textContent += '    \\label{t:table}\n';
     output.textContent += '\\end{table}';
+  }
+
+  function PrintBorder(index) {
+    if (rowBorders[index] !== '') {
+      let row = '        ' + rowBorders[index];
+      output.textContent += row;
+    }
   }
 }
 
@@ -170,6 +192,8 @@ function GenerateHTML() {
     check.addEventListener('change', UpdateCheckboxes);
     if (dataAttribute === 'col') {
       colChecks.push(check);
+    } else {
+      rowChecks.push(check);
     }
     col.appendChild(check);
     return col;
