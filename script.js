@@ -156,6 +156,9 @@ function GenerateHTML() {
   CreateColChecks();
   let tempRow = document.createElement('tr');
   tempRow.appendChild(CreateCheckbox('row', 0));
+  for (let i = 0; i < data.length; i++) {
+    tempRow.appendChild(document.createElement('td'));
+  }
   table.appendChild(tempRow);
 
   for (let i = 0; i < data.length; i++) {
