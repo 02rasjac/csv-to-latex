@@ -130,7 +130,7 @@ function GenerateHTML() {
 
   for (let i = 0; i < data.length; i++) {
     let row = document.createElement('tr');
-    row.appendChild(CreateRowChecks(i));
+    row.appendChild(CreateCheckbox('row', i));
     for (let j = 0; j < data[i].length; j++) {
       let col = document.createElement('td');
       col.textContent = data[i][j];
@@ -145,28 +145,27 @@ function GenerateHTML() {
     let row = document.createElement('tr');
     colChecks = [];
     for (let i = 0; i < data[0].length + 1; i++) {
-      let col = document.createElement('td');
-      let check = document.createElement('input');
-      check.setAttribute('type', 'checkbox');
-      check.setAttribute('data-col-index', i);
-      check.addEventListener('change', UpdateCheckboxes);
-      colChecks.push(check);
-      col.appendChild(check);
-
-      row.appendChild(col);
+      row.appendChild(CreateCheckbox('col', i));
     }
     table.appendChild(row);
   }
 
-  function CreateRowChecks(index) {
+  /**
+   * Create a checkbox inside a column
+   * @param {string} dataAttribute - Use either 'row' or 'col'.
+   * @param {int} index - The current row/col index.
+   * @returns {Element} \<td\> with a checkbox inside.
+   */
+  function CreateCheckbox(dataAttribute, index) {
     let col = document.createElement('td');
     let check = document.createElement('input');
     check.setAttribute('type', 'checkbox');
-    check.setAttribute('data-row-index', index);
+    check.setAttribute(`data-${dataAttribute}-index`, index);
     check.addEventListener('change', UpdateCheckboxes);
-    colChecks.push(check);
+    if (dataAttribute === 'col') {
+      colChecks.push(check);
+    }
     col.appendChild(check);
-
     return col;
   }
 
