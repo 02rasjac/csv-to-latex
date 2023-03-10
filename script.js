@@ -9,8 +9,10 @@ options.forEach((node) => {
 });
 
 let colChecks = [];
+let rowChecks = [];
 let alignment = ''; // i.e r|ccc
 let colBorders = [];
+let rowBorders = [];
 let data = [];
 
 //! TESTING ONLY
@@ -26,6 +28,9 @@ for (let row = 0; row < 10; row++) {
 
 for (let col = 0; col < 9; col++) {
   colBorders.push('');
+}
+for (let row = 0; row < 11; row++) {
+  rowBorders.push('');
 }
 UpdateAll();
 //! END OF TESTING ONLY
@@ -57,34 +62,52 @@ function UpdateCheckboxes(e) {
   const isChecked = e.target.checked;
   switch (name) {
     case 'cols':
-      Cols();
+      SelectAll(colChecks);
+      break;
+    case 'rows':
+      SelectAll(rowChecks);
       break;
     case 'border':
       colChecks[0].checked = isChecked;
       colChecks[colChecks.length - 1].checked = isChecked;
+      rowChecks[0].checked = isChecked;
+      rowChecks[rowChecks.length - 1].checked = isChecked;
       break;
     default:
       break;
   }
 
-  UpdateBorder();
+  UpdateColBorder();
+  UpdateRowBorder();
   UpdateLatex();
 
-  function Cols() {
-    for (let i = 1; i < colBorders.length - 1; i++) {
-      colChecks[i].checked = isChecked;
+  function SelectAll(arr) {
+    for (let i = 1; i < arr.length - 1; i++) {
+      arr[i].checked = isChecked;
     }
   }
 }
 
-function UpdateBorder() {
+function UpdateColBorder() {
   for (let i = 0; i < colChecks.length; i++) {
     const isChecked = colChecks[i].checked;
     colBorders[i] = isChecked ? '|' : '';
-    let cols = table.querySelectorAll(`tr:nth-child(n+2) td:nth-child(${i + 1})`);
+    let cols = table.querySelectorAll(`tr:nth-child(n+3) td:nth-child(${i + 2})`);
     cols.forEach((c) => {
       if (isChecked) c.classList.add('border');
       else c.classList.remove('border');
+    });
+  }
+}
+
+function UpdateRowBorder() {
+  for (let i = 0; i < rowChecks.length; i++) {
+    const isChecked = rowChecks[i].checked;
+    rowBorders[i] = isChecked ? '\\hline \n' : '';
+    let cols = table.querySelectorAll(`tr:nth-child(${i + 2}) td:nth-child(n+3)`);
+    cols.forEach((c) => {
+      if (isChecked) c.classList.add('row-border');
+      else c.classList.remove('row-border');
     });
   }
 }
@@ -97,6 +120,7 @@ function PrintLatex() {
   PrintBegin();
 
   for (let i = 0; i < data.length; i++) {
+    PrintBorder(i);
     let row = '        ';
     for (let j = 0; j < data[i].length; j++) {
       row += data[i][j];
@@ -108,6 +132,7 @@ function PrintLatex() {
     output.textContent += row;
   }
 
+  PrintBorder(rowBorders.length - 1);
   PrintEnd();
 
   function PrintBegin() {
@@ -122,14 +147,28 @@ function PrintLatex() {
     output.textContent += '    \\label{t:table}\n';
     output.textContent += '\\end{table}';
   }
+
+  function PrintBorder(index) {
+    if (rowBorders[index] !== '') {
+      let row = '        ' + rowBorders[index];
+      output.textContent += row;
+    }
+  }
 }
 
 function GenerateHTML() {
   table.textContent = '';
   CreateColChecks();
+  let tempRow = document.createElement('tr');
+  tempRow.appendChild(CreateCheckbox('row', 0));
+  for (let i = 0; i < data.length; i++) {
+    tempRow.appendChild(document.createElement('td'));
+  }
+  table.appendChild(tempRow);
 
   for (let i = 0; i < data.length; i++) {
     let row = document.createElement('tr');
+    row.appendChild(CreateCheckbox('row', i + 1));
     row.appendChild(document.createElement('td'));
     for (let j = 0; j < data[i].length; j++) {
       let col = document.createElement('td');
@@ -139,32 +178,56 @@ function GenerateHTML() {
     table.appendChild(row);
   }
 
-  OffsetCheckbox();
+  OffsetColCheckbox();
+  OffsetRowCheckbox();
 
   function CreateColChecks() {
     let row = document.createElement('tr');
+    row.appendChild(document.createElement('td'));
     colChecks = [];
     for (let i = 0; i < data[0].length + 1; i++) {
-      let col = document.createElement('td');
-      let check = document.createElement('input');
-      check.setAttribute('type', 'checkbox');
-      check.setAttribute('data-col-index', i);
-      check.addEventListener('change', UpdateCheckboxes);
-      colChecks.push(check);
-      col.appendChild(check);
-
-      row.appendChild(col);
+      row.appendChild(CreateCheckbox('col', i));
     }
     table.appendChild(row);
   }
 
-  function OffsetCheckbox() {
-    let cols = table.querySelector('tr').querySelectorAll('td');
+  /**
+   * Create a checkbox inside a column
+   * @param {string} dataAttribute - Use either 'row' or 'col'.
+   * @param {int} index - The current row/col index.
+   * @returns {Element} \<td\> with a checkbox inside.
+   */
+  function CreateCheckbox(dataAttribute, index) {
+    let col = document.createElement('td');
+    let check = document.createElement('input');
+    check.setAttribute('type', 'checkbox');
+    check.setAttribute(`data-${dataAttribute}-index`, index);
+    check.addEventListener('change', UpdateCheckboxes);
+    if (dataAttribute === 'col') {
+      colChecks.push(check);
+    } else {
+      rowChecks.push(check);
+    }
+    col.appendChild(check);
+    return col;
+  }
 
-    for (let i = 0; i < cols.length; i++) {
+  function OffsetColCheckbox() {
+    let cols = table.querySelectorAll('tr:first-child td');
+
+    for (let i = 1; i < cols.length; i++) {
       let input = cols[i].querySelector('input');
       let offsetBy = cols[i].offsetWidth * 0.5;
       input.style.transform = `translate(${offsetBy}px)`;
+    }
+  }
+
+  function OffsetRowCheckbox() {
+    let cols = table.querySelectorAll('tr td:first-child');
+    for (let i = 1; i < cols.length; i++) {
+      let input = cols[i].querySelector('input');
+      let offsetBy = cols[i].offsetHeight * 0.5;
+      input.style.transform = `translate(0, ${offsetBy}px)`;
     }
   }
 }
