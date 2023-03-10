@@ -127,10 +127,14 @@ function PrintLatex() {
 function GenerateHTML() {
   table.textContent = '';
   CreateColChecks();
+  let tempRow = document.createElement('tr');
+  tempRow.appendChild(CreateCheckbox('row', 0));
+  table.appendChild(tempRow);
 
   for (let i = 0; i < data.length; i++) {
     let row = document.createElement('tr');
-    row.appendChild(CreateCheckbox('row', i));
+    row.appendChild(CreateCheckbox('row', i + 1));
+    row.appendChild(document.createElement('td'));
     for (let j = 0; j < data[i].length; j++) {
       let col = document.createElement('td');
       col.textContent = data[i][j];
@@ -144,6 +148,7 @@ function GenerateHTML() {
 
   function CreateColChecks() {
     let row = document.createElement('tr');
+    row.appendChild(document.createElement('td'));
     colChecks = [];
     for (let i = 0; i < data[0].length + 1; i++) {
       row.appendChild(CreateCheckbox('col', i));
@@ -171,9 +176,9 @@ function GenerateHTML() {
   }
 
   function OffsetColCheckbox() {
-    let cols = table.querySelector('tr').querySelectorAll('td');
+    let cols = table.querySelectorAll('tr:first-child td');
 
-    for (let i = 0; i < cols.length; i++) {
+    for (let i = 1; i < cols.length; i++) {
       let input = cols[i].querySelector('input');
       let offsetBy = cols[i].offsetWidth * 0.5;
       input.style.transform = `translate(${offsetBy}px)`;
