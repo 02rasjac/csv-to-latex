@@ -64,6 +64,9 @@ function UpdateCheckboxes(e) {
     case 'cols':
       Cols();
       break;
+    case 'rows':
+      Rows();
+      break;
     case 'border':
       colChecks[0].checked = isChecked;
       colChecks[colChecks.length - 1].checked = isChecked;
@@ -79,6 +82,12 @@ function UpdateCheckboxes(e) {
   function Cols() {
     for (let i = 1; i < colBorders.length - 1; i++) {
       colChecks[i].checked = isChecked;
+    }
+  }
+
+  function Rows() {
+    for (let i = 1; i < rowBorders.length - 1; i++) {
+      rowChecks[i].checked = isChecked;
     }
   }
 }
