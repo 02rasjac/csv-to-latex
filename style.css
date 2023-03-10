@@ -57,6 +57,40 @@ h1 {
 #preview {
   grid-area: 1 / 1 / 3 / 2;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#preview table {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+#preview table td {
+  margin: 5em 2em;
+  text-align: center;
+}
+
+.border {
+  border-right: 1px solid black;
+}
+
+/* #options {
+  border-top: 2px solid var(--main-bg);
+  border-bottom: 2px solid var(--main-bg);
+} */
+
+#options h2 {
+  padding: 0.5em;
+  text-align: center;
+  border-top: 2px solid var(--main-bg);
+  border-bottom: 2px solid var(--main-bg);
+}
+
+#options .group {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* 

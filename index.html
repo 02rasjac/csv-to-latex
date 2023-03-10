@@ -11,7 +11,26 @@
     <h1>Convert CSV to Latex table</h1>
     <div class="container">
       <section id="preview">
-        <h2>Table-preview</h2>
+        <table>
+          <tbody></tbody>
+        </table>
+        <div id="options">
+          <h2>Borders</h2>
+          <div class="group">
+            <div>
+              <label for="cols">All columns</label>
+              <input type="checkbox" name="cols" />
+            </div>
+            <div>
+              <label for="cols">All rows</label>
+              <input type="checkbox" name="rows" disabled />
+            </div>
+            <div>
+              <label for="cols">Full border</label>
+              <input type="checkbox" name="border" />
+            </div>
+          </div>
+        </div>
       </section>
       <section id="csv">
         <textarea name="csv-in" id="csv-in" cols="30" rows="10" placeholder="Paste your CSV-data here" wrap="off"></textarea>
