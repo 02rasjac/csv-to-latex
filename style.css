@@ -76,6 +76,10 @@ h1 {
   border-right: 1px solid black;
 }
 
+.row-border {
+  border-bottom: 1px solid black;
+}
+
 /* #options {
   border-top: 2px solid var(--main-bg);
   border-bottom: 2px solid var(--main-bg);

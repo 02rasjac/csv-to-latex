@@ -99,6 +99,11 @@ function UpdateRowBorder() {
   for (let i = 0; i < rowChecks.length; i++) {
     const isChecked = rowChecks[i].checked;
     rowBorders[i] = isChecked ? '\\hline \n' : '';
+    let cols = table.querySelectorAll(`tr:nth-child(${i + 2}) td:nth-child(n+3)`);
+    cols.forEach((c) => {
+      if (isChecked) c.classList.add('row-border');
+      else c.classList.remove('row-border');
+    });
   }
 }
 
