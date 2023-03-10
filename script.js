@@ -59,6 +59,10 @@ function UpdateCheckboxes(e) {
     case 'cols':
       Cols();
       break;
+    case 'border':
+      colChecks[0].checked = isChecked;
+      colChecks[colChecks.length - 1].checked = isChecked;
+      break;
     default:
       break;
   }
