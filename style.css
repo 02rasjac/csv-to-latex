@@ -64,11 +64,16 @@ h1 {
 
 #preview table {
   margin: 0 auto;
+  border-collapse: collapse;
 }
 
 #preview table td {
   margin: 5em 2em;
   text-align: center;
+}
+
+.border {
+  border-right: 1px solid black;
 }
 
 /* #options {

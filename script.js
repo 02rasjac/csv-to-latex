@@ -63,7 +63,7 @@ function UpdateCheckboxes(e) {
       break;
   }
 
-  UpdateBorder();
+  UpdateBorder(e.target);
   UpdateLatex();
 
   function Cols() {
@@ -73,7 +73,16 @@ function UpdateCheckboxes(e) {
   }
 }
 
-function UpdateBorder() {
+function UpdateBorder(check) {
+  const colIndex = parseInt(check.dataset.colIndex) + 1;
+  const gotChecked = check.checked;
+
+  let cols = table.querySelectorAll(`tr:nth-child(n+2) td:nth-child(${colIndex})`);
+  cols.forEach((c) => {
+    if (gotChecked) c.classList.add('border');
+    else c.classList.remove('border');
+  });
+
   for (let i = 0; i < colChecks.length; i++) {
     colBorders[i] = colChecks[i].checked ? '|' : '';
   }
