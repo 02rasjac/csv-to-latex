@@ -62,10 +62,10 @@ function UpdateCheckboxes(e) {
   const isChecked = e.target.checked;
   switch (name) {
     case 'cols':
-      Cols();
+      SelectAll(colChecks);
       break;
     case 'rows':
-      Rows();
+      SelectAll(rowChecks);
       break;
     case 'border':
       colChecks[0].checked = isChecked;
@@ -79,15 +79,9 @@ function UpdateCheckboxes(e) {
   UpdateRowBorder();
   UpdateLatex();
 
-  function Cols() {
-    for (let i = 1; i < colBorders.length - 1; i++) {
-      colChecks[i].checked = isChecked;
-    }
-  }
-
-  function Rows() {
-    for (let i = 1; i < rowBorders.length - 1; i++) {
-      rowChecks[i].checked = isChecked;
+  function SelectAll(arr) {
+    for (let i = 1; i < arr.length - 1; i++) {
+      arr[i].checked = isChecked;
     }
   }
 }
