@@ -81,7 +81,7 @@ function UpdateBorder() {
   for (let i = 0; i < colChecks.length; i++) {
     const isChecked = colChecks[i].checked;
     colBorders[i] = isChecked ? '|' : '';
-    let cols = table.querySelectorAll(`tr:nth-child(n+2) td:nth-child(${i + 1})`);
+    let cols = table.querySelectorAll(`tr:nth-child(n+2) td:nth-child(${i + 2})`);
     cols.forEach((c) => {
       if (isChecked) c.classList.add('border');
       else c.classList.remove('border');
