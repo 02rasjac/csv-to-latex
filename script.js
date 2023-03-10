@@ -70,6 +70,8 @@ function UpdateCheckboxes(e) {
     case 'border':
       colChecks[0].checked = isChecked;
       colChecks[colChecks.length - 1].checked = isChecked;
+      rowChecks[0].checked = isChecked;
+      rowChecks[rowChecks.length - 1].checked = isChecked;
       break;
     default:
       break;
