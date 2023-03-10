@@ -130,7 +130,7 @@ function GenerateHTML() {
 
   for (let i = 0; i < data.length; i++) {
     let row = document.createElement('tr');
-    row.appendChild(document.createElement('td'));
+    row.appendChild(CreateRowChecks(i));
     for (let j = 0; j < data[i].length; j++) {
       let col = document.createElement('td');
       col.textContent = data[i][j];
@@ -156,6 +156,18 @@ function GenerateHTML() {
       row.appendChild(col);
     }
     table.appendChild(row);
+  }
+
+  function CreateRowChecks(index) {
+    let col = document.createElement('td');
+    let check = document.createElement('input');
+    check.setAttribute('type', 'checkbox');
+    check.setAttribute('data-row-index', index);
+    check.addEventListener('change', UpdateCheckboxes);
+    colChecks.push(check);
+    col.appendChild(check);
+
+    return col;
   }
 
   function OffsetCheckbox() {
